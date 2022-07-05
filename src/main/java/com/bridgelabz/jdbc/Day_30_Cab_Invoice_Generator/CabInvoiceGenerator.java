@@ -2,16 +2,19 @@ package com.bridgelabz.jdbc.Day_30_Cab_Invoice_Generator;
 
 public class CabInvoiceGenerator {
 
+
 	private final int costPerKm = 10;
 	private final int costPerMinute = 1;
-	public int minFare = 5;
+	public int minfare = 5;
 	double totalFare;
+	
+	RideRepository rideRepository = new RideRepository();
 
 	public double calculateFare(double DISTANCE, int TIME) {
 
 		totalFare = costPerKm * DISTANCE + costPerMinute * TIME;
-		if (totalFare < minFare)
-			totalFare = minFare;
+		if (totalFare < minfare)
+			totalFare = minfare;
 		return totalFare;
 	}
 
@@ -32,5 +35,13 @@ public class CabInvoiceGenerator {
 		double numberOfRides = rides.length;
 		double averageFare = totalFare / numberOfRides;
 		return averageFare;
+	}
+
+	public double getRidesDetails(String userID) {
+		return this.calculateFare(rideRepository.getRides(userID));
+	}
+
+	public void addRides(String userID, Rides[] rides) {
+		rideRepository.addRides(userID, rides);
 	}
 }
